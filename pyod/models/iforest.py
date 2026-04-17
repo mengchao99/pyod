@@ -307,7 +307,7 @@ class IForest(BaseDetector):
             trees consisting of only the root node, in which case it will be an
             array of zeros.
         """
-        check_is_fitted(self)
+        check_is_fitted(self, ['detector_'])
         all_importances = Parallel(
             n_jobs=self.n_jobs)(
             delayed(getattr)(tree, "feature_importances_")
