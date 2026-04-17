@@ -8,7 +8,6 @@ Empirical Cumulative Distribution Functions (ECOD)
 
 import warnings
 
-import matplotlib.pyplot as plt
 import numpy as np
 from joblib import Parallel, delayed
 from scipy.stats import skew as skew_sp
@@ -211,6 +210,7 @@ class ECOD(BaseDetector):
     def explain_outlier(self, ind, columns=None, cutoffs=None,
                         feature_names=None, file_name=None,
                         file_type=None):  # pragma: no cover
+        import matplotlib.pyplot as plt
         """Plot dimensional outlier graph for a given data point within
         the dataset.
 

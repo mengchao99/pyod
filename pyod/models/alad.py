@@ -6,17 +6,23 @@
 
 
 import numpy as np
-import pandas as pd
+
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
 
 try:
     import torch
 except ImportError:
-    print('please install torch first')
+    raise ImportError(
+        'ALAD requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from matplotlib import pyplot as plt
+import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils import check_array
 from sklearn.utils.validation import check_is_fitted
@@ -471,13 +477,18 @@ class ALAD(BaseDetector):
         pred_scores = self.get_outlier_scores(X_norm.cpu().numpy())
         return pred_scores
 
+    def _rolling_mean(self, arr, window):
+        """Rolling mean: use pandas if available, otherwise numpy fallback."""
+        if pd is not None:
+            return pd.Series(arr).rolling(window).mean().values
+        return np.convolve(arr, np.ones(window) / window, mode='valid')
+
     def plot_learning_curves(self, start_ind=0, window_smoothening=10):
+        import matplotlib.pyplot as plt
         fig = plt.figure(figsize=(12, 5))
 
-        l_gen = pd.Series(self.hist_loss_gen[start_ind:]).rolling(
-            window=window_smoothening).mean()
-        l_disc = pd.Series(self.hist_loss_disc[start_ind:]).rolling(
-            window=window_smoothening).mean()
+        l_gen = self._rolling_mean(self.hist_loss_gen[start_ind:], window_smoothening)
+        l_disc = self._rolling_mean(self.hist_loss_disc[start_ind:], window_smoothening)
 
         ax = fig.add_subplot(1, 2, 1)
         ax.plot(range(len(l_gen)), l_gen)

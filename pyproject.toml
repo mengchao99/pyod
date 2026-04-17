@@ -47,6 +47,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
+viz = ["matplotlib"]
 torch = ["torch>=2.0"]
 suod = ["suod"]
 xgboost = ["xgboost"]
@@ -58,6 +59,7 @@ huggingface = ["transformers>=4.25.1", "torch>=2.0", "Pillow"]
 graph = ["torch>=2.0", "torch_geometric>=2.0"]
 mcp = ["mcp>=1.0"]
 all = [
+    "matplotlib",
     "torch>=2.0",
     "suod",
     "xgboost",
