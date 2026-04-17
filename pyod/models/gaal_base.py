@@ -9,9 +9,9 @@ import math
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'GAAL models require PyTorch. Install it with: pip install pyod[torch]'
+    )
 import torch.nn as nn
 import torch.nn.functional as F
 

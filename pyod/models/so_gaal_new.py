@@ -12,9 +12,9 @@ import math
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'SO_GAAL requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 import torch.nn as nn
 
 from .base_dl import BaseDeepLearningDetector

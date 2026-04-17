@@ -11,9 +11,9 @@ from collections import defaultdict
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'SO_GAAL requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim

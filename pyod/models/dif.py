@@ -10,9 +10,9 @@ import numpy as np
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'DIF requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 from torch.utils.data import DataLoader
 
 from sklearn.utils import check_array

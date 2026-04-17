@@ -11,9 +11,9 @@ import numpy as np
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'DeepSVDD requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 import torch.nn as nn
 import torch.optim as optim
 

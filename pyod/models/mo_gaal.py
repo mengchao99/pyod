@@ -12,9 +12,9 @@ import numpy as np
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'MO_GAAL requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset

@@ -17,10 +17,14 @@ import numpy as np
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
-import tqdm
+    raise ImportError(
+        'Deep learning models require PyTorch. '
+        'Install it with: pip install pyod[torch]'
+    )
+try:
+    import tqdm
+except ImportError:
+    tqdm = None
 from sklearn.utils import check_array
 
 from .base import BaseDetector
@@ -226,9 +230,10 @@ class BaseDeepLearningDetector(BaseDetector):
         train_loader : torch.utils.data.DataLoader
             The data loader for training the model.
         """
-        for epoch in tqdm.trange(self.epoch_num,
-                                 desc=f'Training: ',
-                                 disable=not self.verbose == 1):
+        epoch_range = tqdm.trange(self.epoch_num,
+                                  desc=f'Training: ',
+                                  disable=not self.verbose == 1) if tqdm is not None else range(self.epoch_num)
+        for epoch in epoch_range:
             start_time = time.time()
             overall_loss = []
             for batch_data in train_loader:

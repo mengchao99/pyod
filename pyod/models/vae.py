@@ -20,9 +20,9 @@ Reference:
 try:
     import torch
 except ImportError:
-    print('please install torch first')
-
-import torch
+    raise ImportError(
+        'VAE requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 from torch import nn
 
 from .base_dl import BaseDeepLearningDetector

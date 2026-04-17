@@ -8,7 +8,9 @@
 try:
     import torch
 except ImportError:
-    print('please install torch first')
+    raise ImportError(
+        'AutoEncoder requires PyTorch. Install it with: pip install pyod[torch]'
+    )
 
 from torch import nn
 
